@@ -1,12 +1,15 @@
-import { Text, View, StyleSheet } from 'react-native';
+import {  View, StyleSheet } from 'react-native';
+import { Text, Button } from 'react-native-paper';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
 
     return (
         <View>
-            <Text style={styles.text}>
-                the magnus archives is a podcast distributed by rusty quill and licensed under a creative commons atributtion non commercial share alike 4.0 international license. todays episode was written by jhonathan sims and brought to you by alexander j newall
-            </Text>
+            <Text> Seja bem vinde !!!!!!!</Text>
+            <Button onPress={() => {
+                navigation.navigate("LoginScreen");}}> 
+                Login 
+                </Button>
         </View>
     );
 }

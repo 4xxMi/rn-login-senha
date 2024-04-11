@@ -5,7 +5,7 @@ export default function LoginScreen() {
     return (
         <View>
             <Text style={styles.text}>
-                Faça login
+                Faça login 
             </Text>
         </View>
     );
