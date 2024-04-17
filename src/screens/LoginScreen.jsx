@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
-import { Text, TextInput } from 'react-native-paper';
+import { View} from 'react-native';
+import { Button, Text, TextInput } from 'react-native-paper';
+import { styles } from '../config/styles';
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
+    function realizaLogin(){
+        console.log("Fazer login");
+    }
+
     return (
         <View>
-            <Text style={styles.text}>
+            <Text style={styles.textOla}>
                 Faça login
             </Text>
             <TextInput
@@ -22,16 +27,8 @@ export default function LoginScreen({ navigation }) {
                 value={senha}
                 secureTextEntry
             />
+            <Button onPress={() => realizaLogin}> Fazer Login </Button>
+            <Button onPress={() => navigation.navigate("RegisterScreen")}> Faça seu cadastro </Button>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    text: {
-        color: 'green',
-        fontWeight: 'bold',
-        padding: '2px',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-});
