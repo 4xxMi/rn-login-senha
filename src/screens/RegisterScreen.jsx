@@ -25,49 +25,50 @@ export default function RegisterScreen({ navigation }) {
             <Text style={styles.preco}> Qual o preço do medo abundante de todas as verdades? </Text>
             <Text style={styles.textReg}> Venda venda a sua alma </Text>
 
-            <TextInput
-                placeholder="Seu nome e sobrenome"
+            <TextInput style={styles.container}
+                placeholder="Seu nome"
                 onChangeText={setNome}
                 value={nome}
             />
-            <TextInput
+            <TextInput style={styles.container}
                 placeholder="Seu email"
                 onChangeText={setEmail}
                 value={email}
             />
-            <TextInput
+            <TextInput style={styles.container}
                 placeholder="Digite a sua senha"
                 onChangeText={setSenha}
                 value={senha}
                 secureTextEntry
             />
-            <TextInput
+            <TextInput style={styles.container}
                 placeholder="Confirme sua senha"
                 onChangeText={setSenhaVerify}
                 value={senhaVerify}
                 secureTextEntry
             />
-            <TextInput
-                placeholder="Sua idade"
+            <Text style={styles.txtDivisor}> Dados pessoais: </Text>
+            <TextInput style={styles.container}
+                placeholder="Logradouro"
                 onChangeText={setLogradouro}
                 value={logradouro}
             />
-            <TextInput
-                placeholder="Nome do cachorro"
+            <TextInput style={styles.container}
+                placeholder="Cidade"
                 onChangeText={setCidade}
                 value={cidade}
             />
-            <TextInput
-                placeholder="Seu maior segredo"
+            <TextInput style={styles.container}
+                placeholder="Estado"
                 onChangeText={setEstado}
                 value={estado}
             />
-            <TextInput
-                placeholder="Numeros e validade atrás do cartão"
+            <TextInput style={styles.container}
+                placeholder="CEP"
                 onChangeText={setCep}
                 value={cep}
             />
-            <Button onPress={() => registra}> Vender </Button>
+            <Button onPress={() => registra}> Registrar </Button>
             <Button onPress={() => navigation.navigate("HomeScreen")}> Cometi um erro. Quero voltar. Por favor me perdoa... </Button>
         </View>
     )

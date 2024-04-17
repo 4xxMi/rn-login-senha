@@ -24,6 +24,15 @@ export const styles = StyleSheet.create({
         padding: '2px',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    txtDivisor: {
+        color: '#510606',
+        textAlign:'center',
+        fontSize:25,
+        margin: '10px',
+    },
+    container:{
+        margin:2
     }
 
 });
