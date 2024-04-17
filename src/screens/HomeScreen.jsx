@@ -5,10 +5,10 @@ export default function HomeScreen({navigation}) {
 
     return (
         <View>
-            <Text> Seja bem vinde !!!!!!!</Text>
-            <Button onPress={() => {
-                navigation.navigate("LoginScreen");}}> 
-                Login 
+            <Text style={styles.text}> Seja bem vinde !!!!!!!</Text>
+            <Button onPress={() => { 
+                navigation.navigate("LoginScreen")}}> 
+                Login !!!!!
                 </Button>
         </View>
     );

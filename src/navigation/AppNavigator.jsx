@@ -11,8 +11,8 @@ export default function AppNavigator () {
             {/* espaco navegacao */}
             <Stack.Navigator>
                 {/* bagulhinho prod coiso */}
-                <Stack.Screen name="Home" component={HomeScreen} options={{title:"Inicial"}} />
-                <Stack.Screen name="Login" component={LoginScreen} options={{title:"Login"}} /> 
+                <Stack.Screen name="HomeScreen" component={HomeScreen} options={{title:"Inicial"}} />
+                <Stack.Screen name="LoginScreen" component={LoginScreen} options={{title:"Login"}} /> 
             </Stack.Navigator>
         </NavigationContainer>
     );

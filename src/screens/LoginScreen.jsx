@@ -1,12 +1,27 @@
-import { StyleSheet, View, TouchableOpacity, Alert, TextInput } from 'react-native';
-import { Text } from 'react-native-paper';
+import { useState } from 'react';
+import { StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
+import { Text, TextInput } from 'react-native-paper';
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+
     return (
         <View>
             <Text style={styles.text}>
-                Faça login 
+                Faça login
             </Text>
+            <TextInput
+                placeholder="Digite seu email"
+                onChangeText={setEmail}
+                value={email}
+            />
+            <TextInput
+                placeholder="Digite sua senha"
+                onChangeText={setSenha}
+                value={senha}
+                secureTextEntry
+            />
         </View>
     );
 }
