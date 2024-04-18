@@ -24,15 +24,26 @@ export const styles = StyleSheet.create({
         padding: '2px',
         justifyContent: 'center',
         alignItems: 'center',
+        textAlign: "center",
+        marginBottom: 20,
     },
     txtDivisor: {
         color: '#510606',
-        textAlign:'center',
-        fontSize:25,
+        textAlign: 'center',
+        fontSize: 25,
         margin: '10px',
     },
-    container:{
-        margin:2
-    }
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    innerContainer: {
+        paddingHorizontal: 20,
+        alignSelf: "stretch",
+    },
+    input: {
+        marginBottom: 10,
+    },
 
 });

@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { styles } from "../config/styles";
-
-//nome,email,senjha,senha2
-//end: lograsouro, cep, cidade, estado
 
 export default function RegisterScreen({ navigation }) {
     const [email, setEmail] = useState("");
@@ -15,61 +12,148 @@ export default function RegisterScreen({ navigation }) {
     const [cep, setCep] = useState("");
     const [cidade, setCidade] = useState("");
     const [estado, setEstado] = useState("");
+    const [erro, setErro] = useState("");
 
-    function registra(){
-        console.log("Registrado com sucesso");
+    function verificaSenha() {
+        if (senha === senhaVerify) {
+            console.log("Tudo certo por aqui. Nada de novo sob o sol. Fork found in the kitchen");
+            return true;
+        } else {
+            alert("A senha deve permancer igual em ambos os campos.");
+            return false;
+        }
+    }
+
+    function verificaCampos() {
+        const inputs = [nome, email, senha, senhaVerify, logradouro, cep, cidade, estado];
+        const (input of inouts)
+            if (input.trim() === "") {
+                console.log("Preencha todos os campos antes de enviar a requisição.");
+                alert("Por favor, preencha todos os campos.");
+                return false;
+            } else {
+                return true;
+            }
+         
+        }
+
+    }
+
+    function registra() {
+        try {
+            console.log(inputs);
+        }
+        catch (erro) {
+            console.error(erro);
+            setErro("Why are you blue???");
+        }
+        if (verificaCampos()) {
+        }
+        if (verificaSenha()) {
+            console.log("Registrado com sucesso");
+        }
+    }
+
+    function buscaCEP() {
+        console.log("Busca cep");
+        let cepLimpo = cep.replace("-", "").trim();
+        if (cepLimpo.length < 8) return;
+        fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
+            .then((res) => res.json())
+            .then((dados) => {
+                //tratar os dados
+                console.log(dados);
+                setLogradouro(dados.logradouro);
+                setCidade(dados.cidade);
+                setEstado(dados.estado);
+            })
+            .catch((erro) => {
+                console.error(erro);
+                setErro("CEP não existe");
+            });
     }
 
     return (
-        <View>
-            <Text style={styles.preco}> Qual o preço do medo abundante de todas as verdades? </Text>
-            <Text style={styles.textReg}> Venda venda a sua alma </Text>
+        <ScrollView>
+            <View style={styles.container}>
+                <View style={styles.innerContainer}>
+                    <Text style={styles.preco}>
+                        Qual o preço do medo abundante de todas as verdades?
+                    </Text>
+                    <Text style={styles.textReg}> Venda venda a sua alma </Text>
 
-            <TextInput style={styles.container}
-                placeholder="Seu nome"
-                onChangeText={setNome}
-                value={nome}
-            />
-            <TextInput style={styles.container}
-                placeholder="Seu email"
-                onChangeText={setEmail}
-                value={email}
-            />
-            <TextInput style={styles.container}
-                placeholder="Digite a sua senha"
-                onChangeText={setSenha}
-                value={senha}
-                secureTextEntry
-            />
-            <TextInput style={styles.container}
-                placeholder="Confirme sua senha"
-                onChangeText={setSenhaVerify}
-                value={senhaVerify}
-                secureTextEntry
-            />
-            <Text style={styles.txtDivisor}> Dados pessoais: </Text>
-            <TextInput style={styles.container}
-                placeholder="Logradouro"
-                onChangeText={setLogradouro}
-                value={logradouro}
-            />
-            <TextInput style={styles.container}
-                placeholder="Cidade"
-                onChangeText={setCidade}
-                value={cidade}
-            />
-            <TextInput style={styles.container}
-                placeholder="Estado"
-                onChangeText={setEstado}
-                value={estado}
-            />
-            <TextInput style={styles.container}
-                placeholder="CEP"
-                onChangeText={setCep}
-                value={cep}
-            />
-            <Button onPress={() => registra}> Registrar </Button>
-            <Button onPress={() => navigation.navigate("HomeScreen")}> Cometi um erro. Quero voltar. Por favor me perdoa... </Button>
-        </View>
-    )
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Seu nome"
+                        onChangeText={setNome}
+                        value={nome}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Seu email"
+                        onChangeText={setEmail}
+                        value={email}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Digite a sua senha"
+                        onChangeText={setSenha}
+                        value={senha}
+                        secureTextEntry
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Confirme sua senha"
+                        onChangeText={setSenhaVerify}
+                        value={senhaVerify}
+                        secureTextEntry
+                    />
+                    <Text variant="headlineSmall" style={styles.txtDivisor}>
+                        Dados pessoais:
+                    </Text>
+
+                    <TextInput
+                        style={styles.input}
+                        placeholder="CEP (apenas numeros)"
+                        onChangeText={setCep}
+                        value={cep}
+                        onBlur={buscaCEP}
+                        maxLength={8}
+                        keyboardType="numeric"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Logradouro"
+                        onChangeText={setLogradouro}
+                        value={logradouro}
+                    />
+
+                    <View
+                        style={{ flexDirection: "row", justifyContent: "space-between" }}
+                    >
+                        <TextInput
+                            style={{ ...styles.input, width: "70%" }}
+                            placeholder="Cidade"
+                            onChangeText={setCidade}
+                            value={cidade}
+                        />
+                        <TextInput
+                            style={{ ...styles.input, width: "30%" }}
+                            placeholder="Estado"
+                            onChangeText={setEstado}
+                            value={estado}
+                            maxLength={2}
+                        />
+                    </View>
+
+                    <Button onPress={registra} mode="outlined">
+                        Registrar
+                    </Button>
+                    <Button onPress={() => navigation.navigate("LoginScreen")}>
+                        Cometi um erro. Quero voltar. Por favor me perdoa...
+                    </Button>
+                </View>
+            </View>
+        </ScrollView>
+    );
 }
