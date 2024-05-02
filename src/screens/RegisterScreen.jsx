@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
-import { Button, Text, TextInput } from "react-native-paper";
+import { Button, Surface, Text, TextInput } from "react-native-paper";
 import { styles } from "../config/styles";
 
 export default function RegisterScreen({ navigation }) {
@@ -13,7 +13,7 @@ export default function RegisterScreen({ navigation }) {
     const [cidade, setCidade] = useState("");
     const [estado, setEstado] = useState("");
     const [erro, setErro] = useState("");
-
+    
     function verificaSenha() {
         if (senha === senhaVerify) {
             console.log("Tudo certo por aqui. Nada de novo sob o sol. Fork found in the kitchen");
@@ -24,30 +24,23 @@ export default function RegisterScreen({ navigation }) {
         }
     }
 
-    function verificaCampos() {
-        const inputs = [nome, email, senha, senhaVerify, logradouro, cep, cidade, estado];
-        const (input of inouts)
-            if (input.trim() === "") {
-                console.log("Preencha todos os campos antes de enviar a requisição.");
-                alert("Por favor, preencha todos os campos.");
-                return false;
-            } else {
-                return true;
-            }
-         
+    function verificaCampo() {
+        if ( !email || !nome || !senha || !senhaVerify || !logradouro || !cep || !cidade || !estado  ) {
+          setErro('Por favor, preencha todos os campos.');
+        } else {
+          setErro('tudo certo');
         }
+      }
 
-    }
-
-    function registra() {
-        try {
-            console.log(inputs);
-        }
-        catch (erro) {
-            console.error(erro);
-            setErro("Why are you blue???");
-        }
-        if (verificaCampos()) {
+    function registra(input) {
+        // try {
+        //     console.log();
+        // }
+        // catch (erro) {
+        //     console.error(erro);
+        //     setErro("Why are you blue???");
+        // }
+        if (verificaCampo()) {
         }
         if (verificaSenha()) {
             console.log("Registrado com sucesso");
@@ -75,7 +68,7 @@ export default function RegisterScreen({ navigation }) {
 
     return (
         <ScrollView>
-            <View style={styles.container}>
+            <Surface style={styles.container}>
                 <View style={styles.innerContainer}>
                     <Text style={styles.preco}>
                         Qual o preço do medo abundante de todas as verdades?
@@ -153,7 +146,7 @@ export default function RegisterScreen({ navigation }) {
                         Cometi um erro. Quero voltar. Por favor me perdoa...
                     </Button>
                 </View>
-            </View>
+            </Surface>
         </ScrollView>
     );
 }

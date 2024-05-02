@@ -1,25 +1,18 @@
-import {  View, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-paper';
+import { View } from "react-native";
+import { Button, Surface, Text } from "react-native-paper";
 
-export default function HomeScreen({navigation}) {
-
-    return (
-        <View>
-            <Text style={styles.text}> Seja bem vinde !!!!!!!</Text>
-            <Button onPress={() => { 
-                navigation.navigate("LoginScreen")}}> 
-                Login !!!!!
-                </Button>
-        </View>
-    );
+export default function HomeScreen({ navigation }) {
+  return (
+    <Surface>
+      <Text>Bem vinda(o) ao nosso app</Text>
+      <Button
+        onPress={() => {
+          navigation.navigate("LoginScreen");
+        }}
+        mode="contained"
+      >
+        Login
+      </Button>
+    </Surface>
+  );
 }
-
-const styles = StyleSheet.create({
-    text: {
-        color: 'green',
-        fontWeight: 'bold',
-        padding:'2px',
-        justifyContent:'center',
-        alignItems:'center',
-    }
-});
