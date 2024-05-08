@@ -12,8 +12,17 @@ export default function RegisterScreen({ navigation }) {
     const [cep, setCep] = useState("");
     const [cidade, setCidade] = useState("");
     const [estado, setEstado] = useState("");
-    const [erro, setErro] = useState("");
-    
+    const [erro, setErro] = useState({
+        email: false,
+        nome: false,
+        senha: false,
+        senhaVerify: false,
+        logradouro: false,
+        cep: false,
+        cidade: false,
+        estado: false,
+    })
+
     function verificaSenha() {
         if (senha === senhaVerify) {
             console.log("Tudo certo por aqui. Nada de novo sob o sol. Fork found in the kitchen");
@@ -23,27 +32,42 @@ export default function RegisterScreen({ navigation }) {
             return false;
         }
     }
-
-    function verificaCampo() {
-        if ( !email || !nome || !senha || !senhaVerify || !logradouro || !cep || !cidade || !estado  ) {
-          setErro('Por favor, preencha todos os campos.');
-        } else {
-          setErro('tudo certo');
-        }
-      }
-
-    function registra(input) {
-        // try {
-        //     console.log();
-        // }
-        // catch (erro) {
-        //     console.error(erro);
-        //     setErro("Why are you blue???");
-        // }
-        if (verificaCampo()) {
-        }
+    function registra() {
         if (verificaSenha()) {
             console.log("Registrado com sucesso");
+        }
+
+        if (nome === "") {
+            setErro({ ...erro, nome: true });
+            return;
+        }
+        if (email === "") {
+            setErro({ ...erro, email: true });
+            return;
+        }
+        if (senha === "") {
+            setErro({ ...erro, senha: true });
+            return;
+        }
+        if (senhaVerify === "") {
+            setErro({ ...erro, senhaVerify: true });
+            return;
+        }
+        if (logradouro === "") {
+            setErro({ ...erro, logradouro: true });
+            return;
+        }
+        if (cep === "") {
+            setErro({ ...erro, cep: true });
+            return;
+        }
+        if (cidade === "") {
+            setErro({ ...erro, cidade: true });
+            return;
+        }
+        if (estado === "") {
+            setErro({ ...erro, estado: true });
+            return;
         }
     }
 
@@ -80,18 +104,21 @@ export default function RegisterScreen({ navigation }) {
                         placeholder="Seu nome"
                         onChangeText={setNome}
                         value={nome}
+                        error={erro.nome}
                     />
                     <TextInput
                         style={styles.input}
                         placeholder="Seu email"
                         onChangeText={setEmail}
                         value={email}
+                        error={erro.email}
                     />
                     <TextInput
                         style={styles.input}
                         placeholder="Digite a sua senha"
                         onChangeText={setSenha}
                         value={senha}
+                        error={erro.senha}
                         secureTextEntry
                     />
                     <TextInput
@@ -99,6 +126,7 @@ export default function RegisterScreen({ navigation }) {
                         placeholder="Confirme sua senha"
                         onChangeText={setSenhaVerify}
                         value={senhaVerify}
+                        error={erro.senhaVerify}
                         secureTextEntry
                     />
                     <Text variant="headlineSmall" style={styles.txtDivisor}>
@@ -113,12 +141,14 @@ export default function RegisterScreen({ navigation }) {
                         onBlur={buscaCEP}
                         maxLength={8}
                         keyboardType="numeric"
+                        error={erro.cep}
                     />
                     <TextInput
                         style={styles.input}
                         placeholder="Logradouro"
                         onChangeText={setLogradouro}
                         value={logradouro}
+                        error={erro.logradouro}
                     />
 
                     <View
@@ -129,12 +159,14 @@ export default function RegisterScreen({ navigation }) {
                             placeholder="Cidade"
                             onChangeText={setCidade}
                             value={cidade}
+                            error={erro.cidade}
                         />
                         <TextInput
                             style={{ ...styles.input, width: "30%" }}
                             placeholder="Estado"
                             onChangeText={setEstado}
                             value={estado}
+                            error={erro.estado}
                             maxLength={2}
                         />
                     </View>
