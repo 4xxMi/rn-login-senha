@@ -4,7 +4,7 @@ import { Button, Surface, Text } from "react-native-paper";
 export default function HomeScreen({ navigation }) {
   return (
     <Surface>
-      <Text>Bem vinda(o) ao nosso app</Text>
+      <Text>Bem vinde ao nosso app</Text>
       <Button
         onPress={() => {
           navigation.navigate("LoginScreen");
@@ -13,6 +13,16 @@ export default function HomeScreen({ navigation }) {
       >
         Login
       </Button>
+
+      {/* <Button
+        onPress={() => {
+          navigation.navigate("SettingsScreen");
+        }}
+        mode="contained"
+      >
+        Configurações
+      </Button> */}
+      
     </Surface>
   );
 }

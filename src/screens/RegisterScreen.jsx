@@ -32,44 +32,47 @@ export default function RegisterScreen({ navigation }) {
             return false;
         }
     }
-    function registra() {
-        if (verificaSenha()) {
-            console.log("Registrado com sucesso");
-        }
 
+    function registra() {
         if (nome === "") {
             setErro({ ...erro, nome: true });
-            return;
+            return (0);
         }
         if (email === "") {
             setErro({ ...erro, email: true });
-            return;
+            return (0);
         }
         if (senha === "") {
             setErro({ ...erro, senha: true });
-            return;
+            return (0);
         }
         if (senhaVerify === "") {
             setErro({ ...erro, senhaVerify: true });
-            return;
+            return (0);
         }
         if (logradouro === "") {
             setErro({ ...erro, logradouro: true });
-            return;
+            return (0);
         }
         if (cep === "") {
             setErro({ ...erro, cep: true });
-            return;
+            return (0);
         }
         if (cidade === "") {
             setErro({ ...erro, cidade: true });
-            return;
+            return (0);
         }
         if (estado === "") {
             setErro({ ...erro, estado: true });
-            return;
+            return (0);
+        }
+
+        if (verificaSenha()) {
+            console.log("Registrado com sucesso");
+            navigation.navigate("LoginScreen");
         }
     }
+
 
     function buscaCEP() {
         console.log("Busca cep");
@@ -175,7 +178,7 @@ export default function RegisterScreen({ navigation }) {
                         Registrar
                     </Button>
                     <Button onPress={() => navigation.navigate("LoginScreen")}>
-                        Cometi um erro. Quero voltar. Por favor me perdoa...
+                        Fazer login
                     </Button>
                 </View>
             </Surface>
