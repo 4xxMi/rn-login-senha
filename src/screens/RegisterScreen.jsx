@@ -95,7 +95,11 @@ export default function RegisterScreen({ navigation }) {
                 }
             );
         } catch (error) {
-            console.log(error);
+            if (error.code === "auth/email-already-in-use") {
+                 console.error("email ja esta cadastrado");
+            } else {
+                console.error(" erro ao cadastrar usuario", error);
+            }
         }
     }
 
