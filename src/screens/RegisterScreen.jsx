@@ -2,8 +2,9 @@ import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Button, Surface, Text, TextInput } from "react-native-paper";
 import { styles } from "../config/styles";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../config/firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 export default function RegisterScreen({ navigation }) {
     const [email, setEmail] = useState("");
@@ -76,12 +77,23 @@ export default function RegisterScreen({ navigation }) {
         cadastrarFirebase();
     }
 
-
     async function cadastrarFirebase() {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
             const user = userCredential.user;
             console.log("Usuário cadastrado!!!!", user);
+
+            const collectionRef = collection(db, "usuarios");
+            const docRef = await setDoc(
+                doc(collectionRef, user.uid),
+                {
+                    nome: nome,
+                    logradouro: logradouro,
+                    cep: cep,
+                    cidade: cidade,
+                    estado: estado,
+                }
+            );
         } catch (error) {
             console.log(error);
         }
@@ -114,85 +126,86 @@ export default function RegisterScreen({ navigation }) {
                         Qual o preço do medo abundante de todas as verdades?
                     </Text>
                     <Text style={styles.textReg}> Venda venda a sua alma </Text>
-
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Seu nome"
-                        onChangeText={setNome}
-                        value={nome}
-                        error={erro.nome}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Seu email"
-                        onChangeText={setEmail}
-                        value={email}
-                        error={erro.email}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite a sua senha"
-                        onChangeText={setSenha}
-                        value={senha}
-                        error={erro.senha}
-                        secureTextEntry
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Confirme sua senha"
-                        onChangeText={setSenhaVerify}
-                        value={senhaVerify}
-                        error={erro.senhaVerify}
-                        secureTextEntry
-                    />
-                    <Text variant="headlineSmall" style={styles.txtDivisor}>
-                        Dados pessoais:
-                    </Text>
-
-                    <TextInput
-                        style={styles.input}
-                        placeholder="CEP (apenas numeros)"
-                        onChangeText={setCep}
-                        value={cep}
-                        onBlur={buscaCEP}
-                        maxLength={8}
-                        keyboardType="numeric"
-                        error={erro.cep}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Logradouro"
-                        onChangeText={setLogradouro}
-                        value={logradouro}
-                        error={erro.logradouro}
-                    />
-
-                    <View
-                        style={{ flexDirection: "row", justifyContent: "space-between" }}
-                    >
+                    <form>
                         <TextInput
-                            style={{ ...styles.input, width: "70%" }}
-                            placeholder="Cidade"
-                            onChangeText={setCidade}
-                            value={cidade}
-                            error={erro.cidade}
+                            style={styles.input}
+                            placeholder="Seu nome"
+                            onChangeText={setNome}
+                            value={nome}
+                            error={erro.nome}
                         />
                         <TextInput
-                            style={{ ...styles.input, width: "30%" }}
-                            placeholder="Estado"
-                            onChangeText={setEstado}
-                            value={estado}
-                            error={erro.estado}
-                            maxLength={2}
+                            style={styles.input}
+                            placeholder="Seu email"
+                            onChangeText={setEmail}
+                            value={email}
+                            error={erro.email}
                         />
-                    </View>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Digite a sua senha"
+                            onChangeText={setSenha}
+                            value={senha}
+                            error={erro.senha}
+                            secureTextEntry
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Confirme sua senha"
+                            onChangeText={setSenhaVerify}
+                            value={senhaVerify}
+                            error={erro.senhaVerify}
+                            secureTextEntry
+                        />
+                        <Text variant="headlineSmall" style={styles.txtDivisor}>
+                            Dados pessoais:
+                        </Text>
 
-                    <Button onPress={registra} mode="outlined">
-                        Registrar
-                    </Button>
-                    <Button onPress={() => navigation.navigate("LoginScreen")}>
-                        Fazer login
-                    </Button>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="CEP (apenas numeros)"
+                            onChangeText={setCep}
+                            value={cep}
+                            onBlur={buscaCEP}
+                            maxLength={8}
+                            keyboardType="numeric"
+                            error={erro.cep}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Logradouro"
+                            onChangeText={setLogradouro}
+                            value={logradouro}
+                            error={erro.logradouro}
+                        />
+
+                        <View
+                            style={{ flexDirection: "row", justifyContent: "space-between" }}
+                        >
+                            <TextInput
+                                style={{ ...styles.input, width: "70%" }}
+                                placeholder="Cidade"
+                                onChangeText={setCidade}
+                                value={cidade}
+                                error={erro.cidade}
+                            />
+                            <TextInput
+                                style={{ ...styles.input, width: "30%" }}
+                                placeholder="Estado"
+                                onChangeText={setEstado}
+                                value={estado}
+                                error={erro.estado}
+                                maxLength={2}
+                            />
+                        </View>
+
+                        <Button onPress={registra} mode="outlined">
+                            Registrar
+                        </Button>
+                        <Button onPress={() => navigation.navigate("LoginScreen")}>
+                            Fazer login
+                        </Button>
+                    </form>
                 </View>
             </Surface>
         </ScrollView>

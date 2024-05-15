@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { Button, Surface, Text, TextInput } from 'react-native-paper';
 import { styles } from '../config/styles';
+import { auth } from '../config/firebase';
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
@@ -15,15 +16,28 @@ export default function LoginScreen({ navigation }) {
         console.log("Fazer login");
       if (email === ""){
         setErro({ ...erro, email: true});
+        return;
       } else {
         setErro({ ...erro, email: false});
       }
       if (senha === ""){
         setErro({ ...erro, senha: true});
+        return;
       } else {
         setErro({ ...erro, senha: false});
     }
+    loginFirebase();
     }
+
+    async function loginFirebase() {
+        try {
+            const usuarioRef = await signInWithEmailAndPassword(auth, email, senha);
+            console.log(usuarioRef);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
 
     return (
         <Surface style={styles.container}>
