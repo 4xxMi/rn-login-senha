@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
-import { Button, Surface, Text, TextInput } from "react-native-paper";
+import { Button, Modal, Portal, Surface, Text, TextInput } from "react-native-paper";
 import { styles } from "../config/styles";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../config/firebase";
@@ -26,6 +26,13 @@ export default function RegisterScreen({ navigation }) {
         estado: false,
     })
 
+    const [visible, setVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
+
+
     function verificaSenha() {
         if (senha === senhaVerify) {
             console.log("Tudo certo por aqui. Nada de novo sob o sol. Fork found in the kitchen");
@@ -39,34 +46,42 @@ export default function RegisterScreen({ navigation }) {
     function registra() {
         if (nome === "") {
             setErro({ ...erro, nome: true });
+            showModal();
             return (0);
         }
         if (email === "") {
             setErro({ ...erro, email: true });
+            showModal();
             return (0);
         }
         if (senha === "") {
             setErro({ ...erro, senha: true });
+            showModal();
             return (0);
         }
         if (senhaVerify === "") {
             setErro({ ...erro, senhaVerify: true });
+            showModal();
             return (0);
         }
         if (logradouro === "") {
             setErro({ ...erro, logradouro: true });
+            showModal();
             return (0);
         }
         if (cep === "") {
             setErro({ ...erro, cep: true });
+            showModal();
             return (0);
         }
         if (cidade === "") {
             setErro({ ...erro, cidade: true });
+            showModal();
             return (0);
         }
         if (estado === "") {
             setErro({ ...erro, estado: true });
+            showModal();
             return (0);
         }
 
@@ -84,22 +99,23 @@ export default function RegisterScreen({ navigation }) {
             console.log("Usuário cadastrado!!!!", user);
 
             const collectionRef = collection(db, "usuarios");
-            const docRef = await setDoc(
-                doc(collectionRef, user.uid),
+            // inserção dos dados
+            await setDoc(doc(collectionRef, user.uid), // collectionref: referencia da colecao tabela; uid:id do documento igual chave primaria
                 {
                     nome: nome,
                     logradouro: logradouro,
                     cep: cep,
                     cidade: cidade,
                     estado: estado,
-                }
-            );
+                });
+            navigation.navigate("LoginScreen");
         } catch (error) {
             if (error.code === "auth/email-already-in-use") {
-                 console.error("email ja esta cadastrado");
+                setErrorMessage("email ja esta cadastrado");
             } else {
-                console.error(" erro ao cadastrar usuario", error);
+                setErrorMessage(" erro ao cadastrar usuario" + error.message);
             }
+            showModal();
         }
     }
 
@@ -119,6 +135,7 @@ export default function RegisterScreen({ navigation }) {
             .catch((erro) => {
                 console.error(erro);
                 setErro("CEP não existe");
+                showModal();
             });
     }
 
@@ -126,6 +143,18 @@ export default function RegisterScreen({ navigation }) {
         <ScrollView>
             <Surface style={styles.container}>
                 <View style={styles.innerContainer}>
+                    {/* Modal */}
+                    <Portal>
+                        <Modal
+                            visible={visible}
+                            onDismiss={hideModal}
+                            contentContainerStyle={{ backgroundColor: "white", padding: 20 }}
+                        >
+                            <Text>{errorMessage}</Text>
+                            <Button onPress={hideModal}>Fechar</Button>
+                        </Modal>
+                    </Portal>
+                    {/* FIM Modal */}
                     <Text style={styles.preco}>
                         Qual o preço do medo abundante de todas as verdades?
                     </Text>
