@@ -100,6 +100,9 @@ export default function LoginScreen({ navigation }) {
                 <Button onPress={() => navigation.navigate("RegisterScreen")}>
                     Faça seu cadastro
                 </Button>
+                <Button onPress={() => navigation.navigate("MusicaScreen")}>
+                    Terceira opção secreta...
+                </Button>
             </View>
         </Surface>
     );
