@@ -1,9 +1,9 @@
-import { View } from "react-native";
 import { Button, Surface, Text } from "react-native-paper";
+import { styles } from "../config/styles";
 
 export default function HomeScreen({ navigation }) {
   return (
-    <Surface>
+    <Surface style={styles.ola}>
       <Text>Bem vinde ao nosso app</Text>
       <Button
         onPress={() => {
@@ -13,16 +13,6 @@ export default function HomeScreen({ navigation }) {
       >
         Login
       </Button>
-
-      {/* <Button
-        onPress={() => {
-          navigation.navigate("SettingsScreen");
-        }}
-        mode="contained"
-      >
-        Configurações
-      </Button> */}
-      
     </Surface>
   );
 }
