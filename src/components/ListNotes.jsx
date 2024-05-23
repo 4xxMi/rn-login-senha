@@ -1,6 +1,8 @@
+import { deleteDoc } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Pressable, View } from "react-native";
 import { db } from "../config/firebase";
 import { List, Text } from "react-native-paper";
 
@@ -29,12 +31,24 @@ export default function ListNotes() {
     };
   }, []);
 
+  function deleteAsk(id){
+    console.log("deletando a tarefa com id", id);
+    const colRef = collection(db, "tarefas");
+    const docRef = doc(colRef, id);
+    deleteDoc(docRef);
+  }
+
   const renderItem = ({ item }) => (
     <List.Section>
       <List.Subheader></List.Subheader>
       <List.Item
         title={item.descricao}
         left={() => <List.Icon icon="check" />}
+        right={() => (
+            <Pressable onPress={() => deleteAsk(item.id)} >
+            <List.Icon icon="delete" />
+            </Pressable>
+        )}
       />
     </List.Section>
   );

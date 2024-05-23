@@ -3,9 +3,11 @@ import { View } from "react-native";
 import { styles } from "../config/styles";
 import InsertNote from "../components/InsertNote";
 import ListNotes from "../components/ListNotes";
+import { ScrollView } from "react-native";
 
 export default function NoteInsert() {
   return (
+    <ScrollView>
     <Surface
       style={{
         ...styles.containerFull,
@@ -19,6 +21,6 @@ export default function NoteInsert() {
           <ListNotes />
         </View>
       </View>
-    </Surface>
+    </Surface></ScrollView>
   );
 }
