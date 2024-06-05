@@ -1,7 +1,8 @@
 import { Provider } from "react-native-paper";
-import { themeDark, themeLight } from "./src/config/theme";
+import { ThemeDark, ThemeLight } from "./src/config/theme";
 import { useColorScheme } from "react-native";
 import AppNavigator from "./src/navigation/AppNavigator";
+import { ThemeProvider } from "./src/contexts/ThemeContext";
 
 export default function App() {
   // pega o tema do dispositivo
@@ -11,12 +12,14 @@ export default function App() {
   const isDarkMode = colorScheme === "dark";
 
   // operador ternário
-  const theme = isDarkMode ? themeDark : themeLight;
+  const theme = isDarkMode ? ThemeDark : ThemeLight;
 
   return (
+    <ThemeProvider>
     <Provider theme={theme}>
       {/* aqui usamos o provider do RNP */}
       <AppNavigator />
     </Provider>
+    </ThemeProvider>
   );
 }
